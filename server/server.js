@@ -1,0 +1,20 @@
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');
+const taskRoutes = require('./routes/task.routes');
+
+const app = express();
+
+// 1. Middleware
+app.use(cors());
+app.use(express.json());
+
+// 2. Connect Database
+connectDB();
+
+// 3. Routes
+app.use('/api', taskRoutes);
+
+// 4. Start Server
+const PORT = 3000;
+app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
