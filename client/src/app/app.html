@@ -1,0 +1,10 @@
+<div style="padding: 20px; border: 2px solid #5f3dc4; border-radius: 8px; margin: 20px;">
+  <h1 style="color: #5f3dc4;">Angular 19 Zoneless Success!</h1>
+
+  @if (data()) {
+  <p><strong>Database Record Found:</strong></p>
+  <pre style="background: #f4f4f4; padding: 15px;">{{ data() | json }}</pre>
+  } @else {
+  <p>⏳ Loading data from MongoDB...</p>
+  }
+</div>
