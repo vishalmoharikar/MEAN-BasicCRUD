@@ -10,3 +10,12 @@ exports.getFirstTask = async (req, res) => {
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 };
+
+exports.getAllTasks = async (req, res) => {
+    try {
+        const task = await Task.find();
+        res.json(task || { title: "No task found!" });
+    } catch (error) {
+        res.status(500).json({ message: "Server Error", error: error.message });
+    }
+};

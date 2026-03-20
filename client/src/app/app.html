@@ -8,3 +8,26 @@
   <p>⏳ Loading data from MongoDB...</p>
   }
 </div>
+
+
+
+
+<div style="padding: 20px; font-family: sans-serif;">
+  <h2>Wealth-Sync Task Manager</h2>
+
+  <div style="margin-bottom: 20px;">
+    <input [(ngModel)]="newTaskTitle" placeholder="Enter task name..." style="padding: 8px; width: 250px;">
+    <button (click)='saveTask()' style="padding: 8px 15px; cursor: pointer;">Add Task</button>
+  </div>
+
+  <hr>
+
+  <h3>Current Tasks:</h3>
+  <ul>
+    @for (task of tasks(); track task._id) {
+    <li>{{ task.title }} - <strong>{{ task.status }}</strong></li>
+    } @empty {
+    <li>No tasks yet. Add one above!</li>
+    }
+  </ul>
+</div>
