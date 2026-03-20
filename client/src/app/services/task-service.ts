@@ -15,7 +15,7 @@ export class TaskService {
 
 
   addTask(title: string) {
-    return this.http.post(this.postUrl, { title, status: 'Pending' });
+    return this.http.post(this.postUrl, { title, status: 'Pending', creadedBy: "Vishal" });
   }
 
   deleteTask(taskId: string) {
@@ -29,6 +29,6 @@ export class TaskService {
     // Using PUT to update the full object
     return this.http.put(url, taskToUpdate);
 
-    
+
   }
 }
