@@ -3,7 +3,24 @@
 
   @if (data()) {
   <p><strong>Database Record Found:</strong></p>
-  <pre style="background: #f4f4f4; padding: 15px;">{{ data() | json }}</pre>
+  <!-- <pre style="background: #f4f4f4; padding: 15px;">{{ data() | json }}</pre> -->
+
+  <ul>
+    @for (task of data(); track task._id) {
+    <li>
+      <div style="display: flex; justify-content: space-between; width: 50%;">
+        <div>
+          {{ task.title }} - <strong>{{ task.status }}</strong>
+        </div>
+        <button (click)="deleteTask(task._id)">delete</button>
+      </div>
+    </li>
+    } @empty {
+    <li>No tasks yet. Add one above!</li>
+    }
+  </ul>
+
+
   } @else {
   <p>⏳ Loading data from MongoDB...</p>
   }

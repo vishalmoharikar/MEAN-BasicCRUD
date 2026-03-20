@@ -16,6 +16,10 @@ export class AppComponent implements OnInit {
   data = signal<any>(null);
 
   ngOnInit() {
+    this.getAllTasks()
+  }
+
+  private getFirstTask() {
     this.http.get('http://localhost:3000/api/first-task')
       .subscribe({
         next: (res) => {
@@ -23,7 +27,9 @@ export class AppComponent implements OnInit {
         },
         error: (err) => console.error('Connection failed. Is Node running?', err)
       });
+  }
 
+  private getAllTasks() {
     this.http.get('http://localhost:3000/api/get-all-tasks')
       .subscribe({
         next: (res) => {
@@ -37,11 +43,18 @@ export class AppComponent implements OnInit {
 
   newTaskTitle = '';
   tasks = signal<any[]>([]);
- 
+
   saveTask() {
     if (!this.newTaskTitle) return;
     this.taskService.addTask(this.newTaskTitle).subscribe((res: any) => {
-      this.tasks.update(prev => [...prev, res]); // Update UI list
+      this.getAllTasks()
+      this.newTaskTitle = ''; // Clear input
+    });
+  }
+
+  deleteTask(taskId: string) {
+    this.taskService.deleteTask(taskId).subscribe((res: any) => {
+      this.getAllTasks()
       this.newTaskTitle = ''; // Clear input
     });
   }
