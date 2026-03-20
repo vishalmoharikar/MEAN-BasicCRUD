@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, provideZonelessChangeDetection, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { TaskService } from './services/task-service';
 import { FormsModule } from '@angular/forms';
 
@@ -14,6 +14,11 @@ import { FormsModule } from '@angular/forms';
 export class AppComponent implements OnInit {
   http = inject(HttpClient);
   data = signal<any>(null);
+  disableAddButton: boolean = false;
+  disableUpdateButton: boolean = true;
+  taskToUpdate: any = undefined;
+
+  constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.getAllTasks()
@@ -57,5 +62,29 @@ export class AppComponent implements OnInit {
       this.getAllTasks()
       this.newTaskTitle = ''; // Clear input
     });
+  }
+
+  test(task: any) {
+    this.disableUpdateButton = false;
+    this.disableAddButton = true;
+    this.newTaskTitle = task.title
+    this.taskToUpdate = task;
+  }
+
+  updateTask() {
+    let clonedTask = JSON.parse(JSON.stringify(this.taskToUpdate))
+    clonedTask.title = this.newTaskTitle;
+    this.taskService.updateTask(clonedTask).subscribe((res: any) => {
+      this.getAllTasks()
+      this.cancelUpdateTask()
+    });
+  }
+
+  cancelUpdateTask() {
+    this.newTaskTitle = "";
+    this.taskToUpdate = undefined;
+    this.disableAddButton = false;
+    this.disableUpdateButton = true;
+
   }
 }

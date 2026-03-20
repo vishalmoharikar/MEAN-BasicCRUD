@@ -4,6 +4,7 @@ const connectDB = require('./config/db');
 const taskRoutes = require('./routes/task.routes.get.task');
 const taskPostRoutes = require('./routes/task.routes.post.task');
 const taskDeleteRoutes = require('./routes/task.routes.delete.task');
+const taskUpdateRoute = require('./routes/task.routes.update.task');
 
 
 
@@ -20,6 +21,7 @@ connectDB();
 app.use('/api', taskRoutes);
 app.use('/api', taskPostRoutes);
 app.use('/api', taskDeleteRoutes);
+app.use('/api', taskUpdateRoute);
 
 // 4. Start Server
 const PORT = 3000;

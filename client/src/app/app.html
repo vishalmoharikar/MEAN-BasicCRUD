@@ -9,7 +9,7 @@
     @for (task of data(); track task._id) {
     <li>
       <div style="display: flex; justify-content: space-between; width: 50%;">
-        <div>
+        <div (click)="test(task)">
           {{ task.title }} - <strong>{{ task.status }}</strong>
         </div>
         <button (click)="deleteTask(task._id)">delete</button>
@@ -34,17 +34,13 @@
 
   <div style="margin-bottom: 20px;">
     <input [(ngModel)]="newTaskTitle" placeholder="Enter task name..." style="padding: 8px; width: 250px;">
-    <button (click)='saveTask()' style="padding: 8px 15px; cursor: pointer;">Add Task</button>
+    <button (click)='saveTask()' style="padding: 8px 15px; cursor: pointer;" [disabled]="disableAddButton">Add
+      Task</button>
+    <button (click)='updateTask()' style="padding: 8px 15px; cursor: pointer;" [disabled]="disableUpdateButton">Update
+      Task</button>
+    <button (click)='cancelUpdateTask()' style="padding: 8px 15px; cursor: pointer;"
+      [disabled]="disableUpdateButton">Cancel Update </button>
+
   </div>
-
-  <hr>
-
-  <h3>Current Tasks:</h3>
-  <ul>
-    @for (task of tasks(); track task._id) {
-    <li>{{ task.title }} - <strong>{{ task.status }}</strong></li>
-    } @empty {
-    <li>No tasks yet. Add one above!</li>
-    }
-  </ul>
+ 
 </div>
